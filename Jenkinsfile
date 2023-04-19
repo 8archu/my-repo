@@ -18,13 +18,13 @@ pipeline {
 	    stage ('docker image build') {
 		 environment
 			{
-				aws_access_key = credentials('aws-access-key')
-				secret_key = credentials('secret-access-key')
+				aws_access_key = credentials('aws_access_key')
+				secret_key = credentials('aws_secret_key')
                   }
 
              steps {
                      sh 'aws configure set aws_access_key_id $aws_access_key'
-		     sh 'aws configure set aws_secret_access_key $aws_secret_key'
+		     sh 'aws configure set aws_secret_access_key $secret_key'
 		     sh 'aws configure set default.region us-east-1'
 		     sh 'aws ecr get-login-password --region ap-south-1 | sudo docker login --username AWS --password-stdin 800872446136.dkr.ecr.ap-south-1.amazonaws.com'
                      sh 'sudo docker build -t archu_123'
